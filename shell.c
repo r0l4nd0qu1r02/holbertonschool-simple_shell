@@ -12,18 +12,20 @@ int main(int ac, char **argv)
 	char *prompt = "($) ";
 	char *line = NULL;
 	size_t n = 0;
+	ssize_t number_of_characters_read;
 
 	(void)ac, (void)*argv;
 
-	while (1)
-	{
+	do {
 		printf("%s", prompt);
-		getline(&line, &n, stdin);
+
+		number_of_characters_read = getline(&line, &n, stdin);
+		if (number_of_characters_read == -1) /* EOF */
+			return (EXIT_FAILURE);
+
 		printf("%s", line);
 		free(line);
-	}
-
-	free(line);
+	} while (1);
 
 	return (EXIT_SUCCESS);
 }
